@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { SequelizeModule } from '@nestjs/sequelize'
 import { MARIADB } from './ironman.json'
-import { UsersModule } from './users/users.module'
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { UsersModule } from './users/users.module'
       autoLoadModels: true,
       logging: false
     }),
-    UsersModule
+    UserModule
   ]
 })
 export class AppModule {}
