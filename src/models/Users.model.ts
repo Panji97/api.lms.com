@@ -23,19 +23,4 @@ export class Users extends Model<Users> {
   @AllowNull(false)
   @Column
   password: string
-
-  @Comment('')
-  @AllowNull(true)
-  @Column
-  createdAt?: Date
-
-  @Comment('')
-  @AllowNull(true)
-  @Column
-  updatedAt?: Date
-
-  @Comment('')
-  @AllowNull(true)
-  @Column
-  deletedAt?: Date
 }

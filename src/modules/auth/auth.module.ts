@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common'
-import { UserService } from './user.service'
-import { UserController } from './user.controller'
 import { SequelizeModule } from '@nestjs/sequelize'
+import { AuthService } from './auth.service'
+import { AuthController } from './auth.controller'
 import { Users } from '../../models/Users.model'
 
 @Module({
-  controllers: [UserController],
-  providers: [UserService],
+  controllers: [AuthController],
+  providers: [AuthService],
   imports: [SequelizeModule.forFeature([Users])]
 })
-export class UserModule {}
+export class AuthModule {}
