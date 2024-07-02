@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException
@@ -7,6 +8,7 @@ import { CreateAuthDto } from './dto/create-auth.dto'
 import { UpdateAuthDto } from './dto/update-auth.dto'
 import { Users } from '../../models/Users.model'
 import { JwtService } from '@nestjs/jwt'
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class AuthService {
@@ -14,8 +16,27 @@ export class AuthService {
 
   async register(payload: CreateAuthDto) {
     try {
-      await Users.create(payload)
-      return 'This action adds a new auth'
+      const user = await Users.findByPk(payload.email)
+
+      if (user)
+        throw new ConflictException('Email already exist', {
+          cause: new Error(),
+          description: 'Email already exist, please use other email!'
+        })
+
+      const hashPassword = await bcrypt.hash(payload.password, 12)
+
+      await Users.create({
+        email: payload.email,
+        password: hashPassword
+      })
+
+      const result = {
+        message: 'success register user',
+        data: null
+      }
+
+      return result
     } catch (error) {
       console.log(error)
       throw error
@@ -29,10 +50,10 @@ export class AuthService {
       if (!user)
         throw new NotFoundException('Email is not registered!', {
           cause: new Error(),
-          description: 'Your email is not registered, please register first'
+          description: 'Your email is not registered, please register first!'
         })
 
-      if (user.password !== payload.password)
+      if (!(await bcrypt.compare(payload.password, user.password)))
         throw new UnauthorizedException('Invalid password', {
           cause: new Error(),
           description: 'The password you entered is incorrect'
@@ -43,8 +64,11 @@ export class AuthService {
       }
 
       const result = {
-        message: 'success user login',
-        access_token: await this.jwtService.signAsync(tokenPayload)
+        message: 'Success',
+        messageDetail: 'Success Login User',
+        data: {
+          access_token: await this.jwtService.signAsync(tokenPayload)
+        }
       }
 
       return result
