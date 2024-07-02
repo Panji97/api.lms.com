@@ -1,10 +1,11 @@
 {
-    "PORT": 8080,
-    "MARIADB":{
-        "PORT": 3306,
-        "NAME": "lms",
-        "PASS": "000000",
-        "HOST": "localhost",
-        "USER":"root"
-    }
+  "PORT": 8080,
+  "MARIADB": {
+    "PORT": 3306,
+    "NAME": "lms",
+    "PASS": "000000",
+    "HOST": "localhost",
+    "USER": "root"
+  },
+  "SECRET_JWT": "JANGAN LUPA MANDI"
 }
