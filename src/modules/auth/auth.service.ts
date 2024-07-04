@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt'
 import {
   ConflictException,
   Injectable,
@@ -5,14 +6,16 @@ import {
   UnauthorizedException
 } from '@nestjs/common'
 import { CreateAuthDto } from './dto/create-auth.dto'
-import { UpdateAuthDto } from './dto/update-auth.dto'
 import { Users } from '../../models/Users.model'
 import { JwtService } from '@nestjs/jwt'
-import * as bcrypt from 'bcrypt'
+import { MailerService } from '@nestjs-modules/mailer'
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private readonly mailerService: MailerService
+  ) {}
 
   async register(payload: CreateAuthDto) {
     try {
@@ -29,8 +32,7 @@ export class AuthService {
 
       const result = {
         message: 'success',
-        detail: 'Success Register User',
-        data: null
+        detail: 'Success Register User'
       }
 
       return result
@@ -62,6 +64,14 @@ export class AuthService {
       }
 
       return result
+    } catch (error) {
+      throw error
+    }
+  }
+
+  async forgotpassword(payload: CreateAuthDto) {
+    try {
+      return 'madang'
     } catch (error) {
       throw error
     }

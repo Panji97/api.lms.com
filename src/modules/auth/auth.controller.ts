@@ -24,4 +24,9 @@ export class AuthController {
   login(@Body() payload: CreateAuthDto) {
     return this.authService.login(payload)
   }
+
+  @Post('/forgot-password')
+  forgotpassword(@Body() payload: CreateAuthDto) {
+    return this.authService.forgotpassword(payload)
+  }
 }
