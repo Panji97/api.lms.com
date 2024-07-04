@@ -18,11 +18,7 @@ export class AuthService {
     try {
       const user = await Users.findByPk(payload.email)
 
-      if (user)
-        throw new ConflictException('Email already exist', {
-          cause: new Error(),
-          description: 'Email already exist, please use other email!'
-        })
+      if (user) throw new ConflictException('Email already exist')
 
       const hashPassword = await bcrypt.hash(payload.password, 12)
 
@@ -32,7 +28,8 @@ export class AuthService {
       })
 
       const result = {
-        message: 'success register user',
+        message: 'success',
+        detail: 'Success Register User',
         data: null
       }
 
@@ -47,17 +44,10 @@ export class AuthService {
     try {
       const user = await Users.findByPk(payload.email)
 
-      if (!user)
-        throw new NotFoundException('Email is not registered!', {
-          cause: new Error(),
-          description: 'Your email is not registered, please register first!'
-        })
+      if (!user) throw new NotFoundException('Email is not registered!')
 
       if (!(await bcrypt.compare(payload.password, user.password)))
-        throw new UnauthorizedException('Invalid password', {
-          cause: new Error(),
-          description: 'The password you entered is incorrect'
-        })
+        throw new UnauthorizedException('Invalid password')
 
       const tokenPayload = {
         email: user.email
@@ -65,7 +55,7 @@ export class AuthService {
 
       const result = {
         message: 'Success',
-        messageDetail: 'Success Login User',
+        detail: 'Success Login User',
         data: {
           access_token: await this.jwtService.signAsync(tokenPayload)
         }
