@@ -7,5 +7,11 @@
     "HOST": "localhost",
     "USER": "root"
   },
-  "SECRET_JWT": "JANGAN LUPA MANDI"
+  "SECRET_JWT": "JANGAN LUPA MANDI",
+  "EMAIL": {
+    "HOST": "sandbox.smtp.mailtrap.io",
+    "USERNAME": "43aff8c094d087",
+    "PORT": "25, 465, 587 or 2525",
+    "PASSWORD": "bd9a9536a4162f"
+  }
 }

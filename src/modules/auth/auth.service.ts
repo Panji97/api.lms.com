@@ -8,14 +8,10 @@ import {
 import { CreateAuthDto } from './dto/create-auth.dto'
 import { Users } from '../../models/Users.model'
 import { JwtService } from '@nestjs/jwt'
-import { MailerService } from '@nestjs-modules/mailer'
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private jwtService: JwtService,
-    private readonly mailerService: MailerService
-  ) {}
+  constructor(private jwtService: JwtService) {}
 
   async register(payload: CreateAuthDto) {
     try {
@@ -71,7 +67,7 @@ export class AuthService {
 
   async forgotpassword(payload: CreateAuthDto) {
     try {
-      return 'madang'
+      return 'success send email'
     } catch (error) {
       throw error
     }

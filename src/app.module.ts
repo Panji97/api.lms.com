@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common'
 import { SequelizeModule } from '@nestjs/sequelize'
 import { MailerModule } from '@nestjs-modules/mailer'
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
-import { MARIADB } from './ironman.json'
 import { AuthModule } from './modules/auth/auth.module'
+import { MARIADB, EMAIL } from './ironman.json'
 
 @Module({
   imports: [
@@ -18,7 +18,13 @@ import { AuthModule } from './modules/auth/auth.module'
       logging: false
     }),
     MailerModule.forRoot({
-      transport: 'smtps://user@domain.com:pass@smtp.domain.com',
+      transport: {
+        host: EMAIL.HOST,
+        auth: {
+          user: EMAIL.USERNAME,
+          pass: EMAIL.PASSWORD
+        }
+      },
       defaults: {
         from: '"nest-modules" <modules@nestjs.com>'
       },
