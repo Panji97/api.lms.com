@@ -4,6 +4,7 @@ import { MailerModule } from '@nestjs-modules/mailer'
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter'
 import { AuthModule } from './modules/auth/auth.module'
 import { MARIADB, EMAIL } from './ironman.json'
+import { join } from 'path'
 
 @Module({
   imports: [
@@ -29,11 +30,8 @@ import { MARIADB, EMAIL } from './ironman.json'
         from: '"nest-modules" <modules@nestjs.com>'
       },
       template: {
-        dir: __dirname + '/templates',
-        adapter: new EjsAdapter(),
-        options: {
-          strict: true
-        }
+        dir: join(__dirname, '..', './src/templates'),
+        adapter: new EjsAdapter()
       }
     }),
     AuthModule

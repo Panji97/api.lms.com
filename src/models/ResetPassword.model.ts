@@ -3,22 +3,31 @@ import {
   Table,
   Column,
   AllowNull,
+  AutoIncrement,
+  Unique,
+  Default,
   PrimaryKey,
-  Comment
+  Comment,
+  DataType
 } from 'sequelize-typescript'
 
-@Table({ tableName: 'users', paranoid: true })
-export class Users extends Model<Users> {
+@Table({ tableName: 'resetPassword', paranoid: true })
+export class ResetPassword extends Model<ResetPassword> {
   @Comment('')
   @AllowNull(false)
   @PrimaryKey
   @Column
-  email: string
+  tokenResetPassword: string
 
   @Comment('')
-  @AllowNull(false)
+  @AllowNull(true)
   @Column
-  password: string
+  email?: string
+
+  @Comment('')
+  @AllowNull(true)
+  @Column
+  tokenExpiryTime?: Date
 
   @Comment('')
   @AllowNull(true)
@@ -34,14 +43,4 @@ export class Users extends Model<Users> {
   @AllowNull(true)
   @Column
   deletedAt?: Date
-
-  @Comment('')
-  @AllowNull(true)
-  @Column
-  token?: string
-
-  @Comment('')
-  @AllowNull(true)
-  @Column
-  rememberme?: boolean
 }

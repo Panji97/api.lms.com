@@ -1,15 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete
-} from '@nestjs/common'
+import { Controller, Post, Body } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { CreateAuthDto } from './dto/create-auth.dto'
-import { UpdateAuthDto } from './dto/update-auth.dto'
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +18,11 @@ export class AuthController {
 
   @Post('/forgot-password')
   forgotpassword(@Body() payload: CreateAuthDto) {
+    return this.authService.forgotpassword(payload)
+  }
+
+  @Post('/reset-password')
+  resetpassword(@Body() payload: CreateAuthDto) {
     return this.authService.forgotpassword(payload)
   }
 }

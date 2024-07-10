@@ -7,4 +7,6 @@ export class CreateAuthDto {
 
   @IsString({ message: 'Password must be a string.' })
   password?: string
+
+  tokenResetPassword?: string
 }
